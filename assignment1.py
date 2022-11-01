@@ -27,23 +27,25 @@ PROVIDERS = {
     # "Virgin Mobile": {"sms": "vmobl.com","mms": "vmpix.com","mms_support": True,},
     # "Xfinity Mobile": {"sms": "vtext.com","mms": "mypixmessages.com","mms_support": True,},
     "Bell":{"sms":"txt.bell.ca","mms":"mms.bell.ca"},
-    "Solo Mobile":{"sms":"txt.bell.ca","mms":"mms.bell.ca"},
-    "Chatr":{"sms": "pcs.rogers.com",},
-    "Rogers":{"sms": "pcs.rogers.com"},
-    "Tbaytel":{"sms": "pcs.rogers.com"},
-    "Eastlink":{"sms": "txt.eastlink.ca"},
-    "Fido":{"sms": "fido.ca"},
-    "Koodo Mobile":{"sms": "msg.koodomobile.com"},
-    "MTS":{"sms": "text.mtsmobility.com"},
-    "PC Mobile":{"sms": "mobiletxt.ca"},
-    "Public Mobile":{"sms": "msg.telus.com"},
-    "Sasktel":{"sms": "sms.sasktel.com"},
-    "TELUS":{"sms": "msg.telus.com"},
-    "Virgin":{"sms": "vmobile.ca"},
-    "WIND Mobile":{"sms": "txt.windmobile.ca"},
+    # "Solo Mobile":{"sms":"txt.bell.ca","mms":"mms.bell.ca"},
+    # "Chatr":{"sms": "pcs.rogers.com",},
+    # "Rogers":{"sms": "pcs.rogers.com"},
+    # "Tbaytel":{"sms": "pcs.rogers.com"},
+    # "Eastlink":{"sms": "txt.eastlink.ca"},
+    # "Fido":{"sms": "fido.ca"},
+    # "Koodo Mobile":{"sms": "msg.koodomobile.com"},
+    # "MTS":{"sms": "text.mtsmobility.com"},
+    # "PC Mobile":{"sms": "mobiletxt.ca"},
+    # "Public Mobile":{"sms": "msg.telus.com"},
+    # "Sasktel":{"sms": "sms.sasktel.com"},
+    # "TELUS":{"sms": "msg.telus.com"},
+    # "Virgin":{"sms": "vmobile.ca"},
+    # "WIND Mobile":{"sms": "txt.windmobile.ca"},
 }
 
 def func_gmail(sender:str='reza.s.tahirkheli@gmail.com', password:str='fotbkdhvoasemwwi', email:str='', body:str=''):
+    if email == '' or email == None: return
+
     context = ssl.create_default_context()
     with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp:
         smtp.login(sender, password)
@@ -51,6 +53,8 @@ def func_gmail(sender:str='reza.s.tahirkheli@gmail.com', password:str='fotbkdhvo
     print('\033[32m[+]\033[0m Email Sent: '+email) 
 
 def func_textMsg(sender:str='reza.s.tahirkheli@gmail.com', password:str='fotbkdhvoasemwwi', phone:str='', body:str=''):
+    if phone == '' or phone == None: return
+    
     for key in PROVIDERS.keys():
         receiver = f"{phone}@{PROVIDERS.get(key).get('sms')}"
 
@@ -62,6 +66,8 @@ def func_textMsg(sender:str='reza.s.tahirkheli@gmail.com', password:str='fotbkdh
         time.sleep(10)
 
 def main():
+    send, email, phone, timestamp, body = '','','','',''
+
     try:
         with open(path_filename+'.lst','r') as fout:
             list_entry:str = fout.readlines()
@@ -80,9 +86,9 @@ def main():
         try:
             send:bool = True if entry[:4].lower().find('yes') > -1 else False
             email:str = re.search('\s(.+?@.+?\.\w+)',entry).groups()[0]
-            phone:str = re.search('(\+\d)?\d{10}',entry).group()
+            phone:str = re.search('(\+\d)?(\d{10})',entry).groups()[1]
             timestamp = datetime.datetime.today()
-            body=f"Subject: {filename}\r\n\r\n{str_msg}"
+            body:str = f"Subject: {filename}\r\n\r\n{str_msg}"
 
             if send:
 

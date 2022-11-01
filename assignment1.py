@@ -96,7 +96,7 @@ def main():
                     func_textMsg(phone=phone, body=body)
                     with open(path_filename+'.log','a') as fin:
                         fin.write(f'{timestamp} Sent: {phone}\n')
-                except: print('Failed')
+                except: pass
         
         except: pass
 

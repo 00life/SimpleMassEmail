@@ -1,1 +1,1 @@
-simple mass email
+simple mass email and phone text

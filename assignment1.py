@@ -43,7 +43,7 @@ PROVIDERS = {
     # "WIND Mobile":{"sms": "txt.windmobile.ca"},
 }
 
-def func_gmail(sender:str='reza.s.tahirkheli@gmail.com', password:str='fotbkdhvoasemwwi', email:str='', body:str=''):
+def func_gmail(sender:str='Your_Email@gmail.com', password:str='Your_Gmail_App_Password', email:str='', body:str=''):
     if email == '' or email == None: return
 
     context = ssl.create_default_context()
@@ -52,7 +52,7 @@ def func_gmail(sender:str='reza.s.tahirkheli@gmail.com', password:str='fotbkdhvo
         smtp.sendmail(sender, email, body)
     print('\033[32m[+]\033[0m Email Sent: '+email) 
 
-def func_textMsg(sender:str='reza.s.tahirkheli@gmail.com', password:str='fotbkdhvoasemwwi', phone:str='', body:str=''):
+def func_textMsg(sender:str='Your_Email@gmail.com', password:str='Your_Gmail_App_Password', phone:str='', body:str=''):
     if phone == '' or phone == None: return
     
     for key in PROVIDERS.keys():
